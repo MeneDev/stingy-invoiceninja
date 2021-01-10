@@ -13,11 +13,11 @@ services:
         "caddy.1_@invoice.host": "invoice.{$$STINGY_ROOT_DOMAIN}"
         caddy.2_route: "@invoice"
         caddy.2_route.0_root: "* /var/www/app/public"
-        caddy.2_route.1_encode: zstd gzip
-        caddy.2_route.1_file_server: browse
         caddy.2_route.2_jwt.allow: roles anonymous guest
-        caddy.2_route.2_respond: "Hello, world!"
-        #caddy.2_route.3_php_fastcgi: "{{upstreams 9000}}"
+        #caddy.2_route.2_respond: "Hello, world!"
+        caddy.2_route.3_php_fastcgi: "{{upstreams 9000}}"
+        caddy.2_route.4_encode: zstd gzip
+        caddy.2_route.5_file_server: browse
     environment:
       PORT: 9000
       APP_URL: $APP_URL

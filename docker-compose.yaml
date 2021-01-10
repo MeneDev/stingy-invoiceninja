@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+  deploy:
+    image: invoiceninja/invoiceninja:alpine-4.5.26
+    networks:
+      - caddy
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      labels:
+        caddy: "*.{$$STINGY_ROOT_DOMAIN}"
+        "caddy.@invoice.host": "invoice.{$$STINGY_ROOT_DOMAIN}"
+        caddy.2_route: "@invoice"
+        caddy.2_route.jwt.allow: roles anonymous guest
+        caddy.2_route.3_reverse_proxy: "{{upstreams 8000}}"
+      environment:
+        APP_URL: $APP_URL
+        APP_KEY: $APP_KEY
+        APP_CIPHER: $APP_CIPHER
+        REQUIRE_HTTPS: true
+        TRUSTED_PROXIES: 0.0.0.0/0
+        DB_USERNAME: $DB_USERNAME
+        DB_PASSWORD: $DB_PASSWORD
+        DB_HOST: $DB_HOST
+        DB_DATABASE: $DB_DATABASE
+        MAIL_HOST: $MAIL_HOST
+        MAIL_USERNAME: $MAIL_USERNAME
+        MAIL_PASSWORD: $MAIL_PASSWORD
+        MAIL_DRIVER: $MAIL_DRIVER
+        MAIL_FROM_NAME: $MAIL_FROM_NAME
+        MAIL_FROM_ADDRESS: $MAIL_FROM_ADDRESS
+        SESSION_ENCRYPT: true
+        SESSION_SECURE: true
+
+
+networks:
+  caddy:
+    external: true
+    name: caddy_caddy

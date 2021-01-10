@@ -13,7 +13,7 @@ services:
         "caddy.@invoice.host": "invoice.{$$STINGY_ROOT_DOMAIN}"
         caddy.2_route: "@invoice"
         caddy.2_route.jwt.allow: roles anonymous guest
-        caddy.2_route.3_reverse_proxy: "{{php_fastcgi 9000}}"
+        caddy.2_route.3_php_fastcgi: "{{upstreams 9000}}"
     environment:
       APP_URL: $APP_URL
       APP_KEY: $APP_KEY

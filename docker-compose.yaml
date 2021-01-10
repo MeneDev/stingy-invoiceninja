@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  deploy:
+  invoice:
     image: invoiceninja/invoiceninja:alpine-4.5.26
     networks:
       - caddy
@@ -15,6 +15,7 @@ services:
         caddy.2_route.4_jwt.allow: roles anonymous guest
         caddy.2_route.3_php_fastcgi: "{{upstreams 9000}}"
     environment:
+      PORT: 9000
       APP_URL: $APP_URL
       APP_KEY: $APP_KEY
       APP_CIPHER: $APP_CIPHER
@@ -32,7 +33,6 @@ services:
       MAIL_FROM_ADDRESS: $MAIL_FROM_ADDRESS
       SESSION_ENCRYPT: "true"
       SESSION_SECURE: "true"
-
 
 networks:
   caddy:

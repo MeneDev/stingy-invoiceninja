@@ -18,7 +18,7 @@ services:
       APP_URL: $APP_URL
       APP_KEY: $APP_KEY
       APP_CIPHER: $APP_CIPHER
-      REQUIRE_HTTPS: true
+      REQUIRE_HTTPS: "true"
       TRUSTED_PROXIES: 0.0.0.0/0
       DB_USERNAME: $DB_USERNAME
       DB_PASSWORD: $DB_PASSWORD
@@ -30,8 +30,8 @@ services:
       MAIL_DRIVER: $MAIL_DRIVER
       MAIL_FROM_NAME: $MAIL_FROM_NAME
       MAIL_FROM_ADDRESS: $MAIL_FROM_ADDRESS
-      SESSION_ENCRYPT: true
-      SESSION_SECURE: true
+      SESSION_ENCRYPT: "true"
+      SESSION_SECURE: "true"
 
 
 networks:

@@ -3,8 +3,8 @@ services:
   server:
     image: nginx
     networks:
-      - default
-      - caddy
+    - invoice
+    - caddy
     deploy:
       replicas: 1
       restart_policy:
@@ -22,6 +22,9 @@ services:
 
   app:
     image: invoiceninja/invoiceninja:alpine-4.5.26
+    networks:
+    - invoice
+
     deploy:
       replicas: 1
       restart_policy:
@@ -54,6 +57,7 @@ volumes:
   storage-volume:
 
 networks:
+  invoice:
   caddy:
     external: true
     name: caddy

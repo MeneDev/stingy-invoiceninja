@@ -1,9 +1,11 @@
 version: "3.7"
 services:
-  invoice:
-    image: invoiceninja/invoiceninja:alpine-4.5.26
+  server:
+    image: nginx
     networks:
+      - default
       - caddy
+    restart: always
     deploy:
       replicas: 1
       restart_policy:
@@ -12,12 +14,19 @@ services:
         caddy: "*.{$$STINGY_ROOT_DOMAIN}"
         "caddy.1_@invoice.host": "invoice.{$$STINGY_ROOT_DOMAIN}"
         caddy.2_route: "@invoice"
-        caddy.2_route.0_root: "* /var/www/app/public"
-        caddy.2_route.2_jwt.allow: roles anonymous guest
-        #caddy.2_route.2_respond: "Hello, world!"
-        caddy.2_route.3_php_fastcgi: "{{upstreams 9000}}"
-        caddy.2_route.4_encode: zstd gzip
-        caddy.2_route.5_file_server: browse
+        caddy.2_route.jwt.allow: roles anonymous guest
+        caddy.2_route.3_reverse_proxy: "{{upstreams 80}}"
+    volumes:
+    - ./nginx.conf:ro
+    - public-volume:/var/www/app/public:rw,delegated
+    - storage-volume:/var/www/app/storage:rw,delegated
+
+  app:
+    image: invoiceninja/invoiceninja:alpine-4.5.26
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
     environment:
       PORT: 9000
       APP_URL: $APP_URL
@@ -38,7 +47,11 @@ services:
       SESSION_ENCRYPT: "true"
       SESSION_SECURE: "true"
 
+volumes:
+  public-volume:
+  storage-volume:
+
 networks:
   caddy:
     external: true
-    name: caddy_caddy
+    name: caddy

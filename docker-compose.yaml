@@ -19,6 +19,8 @@ services:
     - ./nginx.conf:/etc/nginx/conf.d/in-vhost.conf:ro
     - public-volume:/var/www/app/public:rw,delegated
     - storage-volume:/var/www/app/storage:rw,delegated
+    environment: 
+      VIRTUAL_HOST: invoice.mene.dev
 
   app:
     image: invoiceninja/invoiceninja:alpine-4.5.26
@@ -51,7 +53,6 @@ services:
       MAIL_FROM_ADDRESS: $MAIL_FROM_ADDRESS
       SESSION_ENCRYPT: "true"
       SESSION_SECURE: "true"
-      VIRTUAL_HOST: invoice.mene.dev
 
 volumes:
   public-volume:

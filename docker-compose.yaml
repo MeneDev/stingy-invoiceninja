@@ -51,6 +51,7 @@ services:
       MAIL_FROM_ADDRESS: $MAIL_FROM_ADDRESS
       SESSION_ENCRYPT: "true"
       SESSION_SECURE: "true"
+      VIRTUAL_HOST: invoice.mene.dev
 
 volumes:
   public-volume:

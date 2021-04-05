@@ -39,6 +39,7 @@ services:
       APP_URL: $APP_URL
       APP_KEY: $APP_KEY
       APP_CIPHER: $APP_CIPHER
+      APP_DEBUG: "true"
       REQUIRE_HTTPS: "true"
       TRUSTED_PROXIES: 0.0.0.0/0
       DB_USERNAME: $DB_USERNAME

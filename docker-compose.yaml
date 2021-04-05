@@ -53,6 +53,7 @@ services:
       MAIL_FROM_ADDRESS: $MAIL_FROM_ADDRESS
       SESSION_ENCRYPT: "true"
       SESSION_SECURE: "true"
+      PHANTOMJS_CLOUD_KEY: $PHANTOMJS_CLOUD_KEY
 
 volumes:
   public-volume:
